@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&family=Press+Start+2P&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "VT323", monospace;
+  --font-mono: "VT323", monospace;
+  --font-pixel: "Press Start 2P", system-ui;
+
+  --color-neon-cyan: #00f3ff;
+  --color-neon-magenta: #ff00ff;
+  --color-neon-lime: #39ff14;
+}
+
+@layer base {
+  body {
+    @apply bg-black text-neon-cyan overflow-x-hidden;
+    background-image: 
+      linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+      linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    background-size: 100% 4px, 3px 100%;
+    pointer-events: auto;
+  }
+}
+
+@layer utilities {
+  .glitch-container {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .glitch-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.15),
+      rgba(0, 0, 0, 0.15) 1px,
+      transparent 1px,
+      transparent 2px
+    );
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  .glitch-text {
+    text-shadow: 2px 0 #ff00ff, -2px 0 #00f3ff;
+    animation: glitch-anim 2s infinite linear alternate-reverse;
+  }
+
+  .screen-tear {
+    animation: tear 4s infinite steps(1);
+  }
+
+  @keyframes glitch-anim {
+    0% { text-shadow: 2px 0 #ff00ff, -2px 0 #00f3ff; }
+    25% { text-shadow: -2px 0 #ff00ff, 2px 0 #00f3ff; }
+    50% { text-shadow: 3px 0 #ff00ff, -3px 0 #00f3ff; }
+    75% { text-shadow: -1px 0 #ff00ff, 1px 0 #00f3ff; }
+    100% { text-shadow: 2px 0 #ff00ff, -2px 0 #00f3ff; }
+  }
+
+  @keyframes tear {
+    0% { transform: translateX(0); }
+    95% { transform: translateX(0); }
+    96% { transform: translateX(5px); clip-path: inset(10% 0 40% 0); }
+    97% { transform: translateX(-5px); clip-path: inset(40% 0 10% 0); }
+    98% { transform: translateX(0); clip-path: none; }
+  }
+
+  .crt-flicker {
+    animation: flicker 0.15s infinite;
+  }
+
+  @keyframes flicker {
+    0% { opacity: 0.98; }
+    50% { opacity: 1; }
+    100% { opacity: 0.99; }
+  }
+
+  .neon-border-cyan {
+    border: 2px solid #00f3ff;
+    box-shadow: 0 0 10px #00f3ff, inset 0 0 5px #00f3ff;
+  }
+
+  .neon-border-magenta {
+    border: 2px solid #ff00ff;
+    box-shadow: 0 0 10px #ff00ff, inset 0 0 5px #ff00ff;
+  }
+}
